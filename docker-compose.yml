@@ -4,5 +4,10 @@ services:
  camp_collector:
   image: haze5959/camp_collector:0.1
   network_mode: "host"
-  privileged: true
   command: bash -c "cd CampingCrawler_Collector && git pull && python3 -u  main.py"
+
+ camp_middleware:
+  image: haze5959/camp_middleware:0.2
+  ports:
+   - "8000:8000"
+  command: bash -c "cd CampingCrawler_MiddleWare && git pull && /root/.deno/bin/deno run --allow-net main.ts" 
