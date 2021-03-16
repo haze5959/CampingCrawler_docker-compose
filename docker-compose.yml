@@ -2,12 +2,19 @@ version: '3'
 
 services:
  camp_collector:
-  image: haze5959/camp_collector:0.1
+  image: haze5959/camp_collector:0.2
   network_mode: "host"
   command: bash -c "cd CampingCrawler_Collector && git pull && python3 -u  main.py"
 
  camp_middleware:
-  image: haze5959/camp_middleware:0.2
+  image: haze5959/camp_middleware:0.3
   ports:
    - "8000:8000"
   command: bash -c "cd CampingCrawler_MiddleWare && git pull && /root/.deno/bin/deno run --allow-net main.ts" 
+
+ camp_webserver:
+  image: haze5959/camp_webserver:0.2
+  ports:
+   - "80:80"
+  command: bash -c "cd CampingCrawler_WebServer && git pull origin main && /etc/init.d/nginx start && tail -f /dev/null"
+  tty: true
