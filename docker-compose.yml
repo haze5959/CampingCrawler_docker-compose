@@ -7,10 +7,10 @@ services:
   command: bash -c "cd CampingCrawler_Collector && git pull && python3 -u  main.py"
 
  camp_middleware:
-  image: haze5959/camp_middleware:0.3
+  image: haze5959/camp_middleware:0.4
   ports:
    - "8000:8000"
-  command: bash -c "cd CampingCrawler_MiddleWare && git pull && /root/.deno/bin/deno run --allow-net main.ts" 
+  command: bash -c "cd CampingCrawler_MiddleWare && git pull && /root/.deno/bin/deno run --allow-net --allow-read --allow-env main.ts" 
 
  camp_webserver:
   image: haze5959/camp_webserver:0.2
