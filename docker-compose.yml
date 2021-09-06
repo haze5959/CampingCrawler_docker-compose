@@ -2,15 +2,21 @@ version: '3'
 
 services:
  camp_collector:
-  image: haze5959/camp_collector:0.2
+  image: haze5959/camp_collector:0.4
   network_mode: "host"
   command: bash -c "cd CampingCrawler_Collector && git pull && python3 -u  main.py"
 
  camp_middleware:
-  image: haze5959/camp_middleware:0.4
-  ports:
-   - "8000:8000"
+  image: haze5959/camp_middleware:0.6
+  network_mode: "host"
+  depends_on:
+   - camp_auth
   command: bash -c "cd CampingCrawler_MiddleWare && git pull && /root/.deno/bin/deno run --allow-net --allow-read --allow-env main.ts" 
+
+ camp_auth:
+  image: haze5959/camp_auth:0.1
+  network_mode: "host"
+  command: bash -c "cd CampingCrawler_Auth && git pull origin main && python3 auth.py"
 
  camp_webserver:
   image: haze5959/camp_webserver:0.2
